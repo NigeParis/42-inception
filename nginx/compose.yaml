@@ -1,5 +1,7 @@
 services:
   nginx:
+    image: my-nginx-image
+    container_name: nginx
     build:
       context: .
       dockerfile: Dockerfile
