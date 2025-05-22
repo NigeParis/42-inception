@@ -3,7 +3,7 @@ services:
     image: my-nginx-image
     container_name: nginx
     build:
-      context: .
+      context: requirements/nginx/
       dockerfile: Dockerfile
     ports:
       - "443:443"
