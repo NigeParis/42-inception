@@ -11,11 +11,9 @@ RUN apt install -y mariadb-server
 RUN echo "/etc/mysql/mariadb.conf.d > mariadb.cnf"
 
 # Set up MariaDB to run on container
-COPY init-db.sh /init-db.sh
+COPY init-db.sh .
 RUN chmod +x /init-db.sh
 
 # RUN bash /init-db.sh
-# ENTRYPOINT ["./init-db.sh"]
+ENTRYPOINT ["./init-db.sh"]
 
-ENV NAME="John Doe" 
-ENTRYPOINT ["/bin/echo", "Hello, $(NAME)"]
