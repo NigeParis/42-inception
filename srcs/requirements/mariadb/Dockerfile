@@ -1,19 +1,25 @@
+# pull base image
 FROM debian:bullseye
 
-# Install MariaDB
-RUN apt update -y 
-RUN apt install -y mariadb-client
-RUN apt install -y mariadb-server
+# update and upgrade the system
+RUN apt-get update && apt-get upgrade -y
 
-# Copy your custom config file if needed
-# RUN touch -y mariadb.cnf
-# COPY mariadb.cnf /etc/mysql/mariadb.conf.d/
-RUN echo "/etc/mysql/mariadb.conf.d > mariadb.cnf"
+# # install the required packages
+RUN apt-get install -y mariadb-server
 
-# Set up MariaDB to run on container
-COPY init-db.sh .
-RUN chmod +x /init-db.sh
+COPY conf/50-server.cnf	/etc/mysql/mariadb.conf.d/
+RUN mkdir -p /var/run/mysqld
+RUN mkdir -p /var/lib/mysql
+RUN chown mysql:mysql /var/run/mysqld/
+RUN chmod -R 755 /var/run/mysqld/
+RUN chown mysql:mysql /var/lib/mysql/
+RUN chmod -R 755 /var/lib/mysql/
 
-# RUN bash /init-db.sh
-ENTRYPOINT ["./init-db.sh"]
+# copy file from host to container
+COPY ./init-db.sh /mdb-conf.sh
 
+# set permissions to the file
+RUN chmod +x /mdb-conf.sh
+
+# define command to run when the container starts
+ENTRYPOINT ["bash", "./mdb-conf.sh"]
