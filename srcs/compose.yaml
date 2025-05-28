@@ -1,48 +1,86 @@
-version: '3.9'
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Docker compose                                     :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/05/28 13:29:05 by nrobinso          #+#    #+#              #
+#    Updated: 2025/05/28 13:29:57 by nrobinso         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+# inception compose
 
 services:
   mariadb:
     container_name: mariadb
-    build: 
+    build:
       context: requirements/mariadb/
       dockerfile: Dockerfile
+    volumes:
+      - mariadb:/var/lib/mysql
     env_file:
-      - ../secrets/.env_file.sh
+      - ../secrets/.env
     restart: always
-
     ports:
-       - "3306:3306"
+       - 3306
     networks:
       - inception
 
   nginx:
     container_name: nginx
     env_file: 
-      - ../secrets/.env_file.sh
+      - ../secrets/.env
     build:
       context: requirements/nginx/
       dockerfile: Dockerfile
     restart: always
+    depends_on:
+      - wordpress
+    volumes:
+      - wordpress:/var/www/wordpress
+
     ports:
       - "443:443"
     networks:
       - inception 
 
 
+
   wordpress:
     container_name: wordpress
     env_file: 
-      - ../secrets/.env_file.sh
+      - ../secrets/.env
     build:
       context: requirements/wordpress/
       dockerfile: Dockerfile
+    depends_on:
+      - mariadb 
+    volumes:
+      - wordpress:/var/www/wordpress
     restart: always
     ports:
-      - "9000:9000"
+      - 9000
     networks:
       - inception 
 
 
+volumes:
+  mariadb:
+    name: mariadb_data
+    driver: local
+    driver_opts:
+      device: /home/nigel/data/mariadb
+      o: bind
+      type: none
+
+  wordpress:
+    name: wordpress_data
+    driver: local
+    driver_opts:
+      device: /home/nigel/data/wordpress
+      o: bind
+      type: none
 
 
 
