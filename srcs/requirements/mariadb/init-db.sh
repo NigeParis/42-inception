@@ -1,44 +1,39 @@
 #!/bin/bash
 trap 'exit' TERM INT
-# start mariadb
-echo "Starting MariaDB service..."
 exec mysqld_safe &
-
 until mysqladmin ping >/dev/null 2>&1; do
     sleep 1
     echo "Waiting for MariaDB service..."
 done
-
-echo "MariaDB service started."
-
-# re config database
-
-echo "Create database ${MDB_NAME} password=${MDB_ROOT_PASSWORD} if it doesn't exist"
-mysql -u root -p${MDB_ROOT_PASSWORD} -e "CREATE DATABASE IF NOT EXISTS \`${MDB_NAME}\`;"
-
-echo "Créer l'utilisateur ${MDB_USER} with password ${MDB_PASSWORD}"
-mysql   -u root -p${MDB_ROOT_PASSWORD} -e "CREATE USER IF NOT EXISTS \`${MDB_USER}\`@'%' IDENTIFIED BY '${MDB_PASSWORD}';"
-
-echo "Attribuer les privilèges à l'utilisateur"
-mysql -u root -p${MDB_ROOT_PASSWORD} -e "GRANT ALL PRIVILEGES ON \`${MDB_NAME}\`.* TO '${MDB_USER}'@'%' IDENTIFIED BY '${MDB_PASSWORD}';"
-
-echo "Mettre à jour le mot de passe root"
-mysql  -u root -p${MDB_ROOT_PASSWORD} -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MDB_ROOT_PASSWORD}';"
-
-echo " Rafraîchir les privilèges ${MDB_PASSWORD}" 
-mysql  -u root -p${MDB_ROOT_PASSWORD} -e "FLUSH PRIVILEGES;"
-
-#--------------mariadb restart--------------#
-echo "Shutting down MariaDB to restart with new config..."
+mysql -u root -p${MDB_ROOT_PASSWORD} -e \
+"CREATE DATABASE IF NOT EXISTS \`${MDB_NAME}\`;"
+mysql -u root -p${MDB_ROOT_PASSWORD} -e \
+"CREATE USER IF NOT EXISTS \`${MDB_USER}\`@'%' IDENTIFIED BY '${MDB_PASSWORD}';"
+mysql -u root -p${MDB_ROOT_PASSWORD} -e \
+"GRANT ALL PRIVILEGES ON \`${MDB_NAME}\`.* TO '${MDB_USER}'@'%' IDENTIFIED BY '${MDB_PASSWORD}';"
+mysql -u root -p${MDB_ROOT_PASSWORD} -e \
+"ALTER USER 'root'@'localhost' IDENTIFIED BY '${MDB_ROOT_PASSWORD}';"
+mysql -u root -p${MDB_ROOT_PASSWORD} -e "FLUSH PRIVILEGES;"
 mysqladmin -u root -p${MDB_ROOT_PASSWORD} shutdown
-
-# Wait a bit for MariaDB to shut down properly
-
-echo "Restarting MariaDB with new config..."
-# Restart mariadb with new config in the background to keep the container running
-# mysqld_safe --port=3306 --bind-address=0.0.0.0 --datadir='/var/lib/mysql'
 exec mysqld_safe
-
-# Keep the container alive
-##
 echo "MariaDB should now be running. Keeping container alive..."
+
+# **************************************************************************** #
+# Notes - Initialization Script for MariaDB in Docker Container                #
+# **************************************************************************** #
+
+# Line 01: Defines the script as a Bash executable.
+# Line 02: Ensures the script exits cleanly when the container stops.
+# Line 03: Starts the MariaDB service using mysqld_safe in the background.
+# Line 04: Waits for MariaDB to become available before proceeding.
+# Line 05: Sleeps for 1 second between connection attempts to avoid excessive polling.
+# Line 06: Prints a message indicating the database service is still starting.
+# Line 08: Creates the database if it does not already exist.
+# Line 10: Creates a new database user with a specified password if it does not exist.
+# Line 12: Grants full privileges to the new user on the created database.
+# Line 14: Updates the root user's password for enhanced security.
+# Line 16: Applies the changes by flushing privileges.
+# Line 17: Shuts down MariaDB gracefully after setting up users and databases.
+# Line 18: Restarts MariaDB to ensure a clean and stable startup.
+# Line 19: Prints a confirmation message indicating MariaDB is running properly.
+

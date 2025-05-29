@@ -46,7 +46,7 @@ ENTRYPOINT ["bash", "wp-config.sh"]
 # Line 16: Upgrades system packages for stability.
 # Line 17: Installs wget for downloading files.
 # Line 18: Installs PHP 7.4 for WordPress compatibility.
-# Line 19: Installs PHP-FPM for handling PHP processing.
+# Line 19: Installs PHP-FPM for handling PHP processing.# Line 30: Executes "php-fpm" in the -F foreground as -R root user
 # Line 20: Installs MySQL extension to interact with databases.
 # Line 21: Installs MariaDB client for database communication.
 # Line 22: Installs curl for web requests.
