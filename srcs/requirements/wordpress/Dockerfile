@@ -23,7 +23,7 @@ RUN apt-get install -y curl
 RUN apt-get install vim -y
 RUN apt-get update && apt-get install -y tar \
     && rm -rf /var/lib/apt/lists/*
-COPY www.conf /etc/php/7.4/fpm/pool.d/
+COPY conf/www.conf /etc/php/7.4/fpm/pool.d/
 RUN wget https://fr.wordpress.org/wordpress-6.6-fr_FR.tar.gz -P /var/www
 RUN cd /var/www && tar -xvf wordpress-6.6-fr_FR.tar.gz && rm -rf wordpress-6.6-fr_FR.tar.gz
 RUN chown -R root:root /var/www/wordpress
