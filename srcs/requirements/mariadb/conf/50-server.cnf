@@ -1,7 +1,29 @@
+# **************************************************************************** #
+# Notes - Configuration for a MariaDB Container #
+# **************************************************************************** #
+
+# Line 25: Defines general server settings.
+# Line 26: Configures the MariaDB daemon.
+# Line 27: Specifies the user running MariaDB.
+# Line 28: Tracks the process ID.
+# Line 29: Base directory for MariaDB installation.
+# Line 30: Storage location for database files.
+# Line 31: Temporary file storage directory.
+# Line 32: Localization message directory.
+# Line 33: Language setting for system messages.
+# Line 34: Prevents external locking for performance.
+# Line 35: Allows connections from any IP.
+# Line 36: Auto-cleans logs after 10 days.
+# Line 37: Default character encoding.
+# Line 38: Default text comparison rules.
+# Line 39: Default MariaDB communication port.
+# Line 40: Path to MariaDB socket file.
+# Line 41: Configures embedded MariaDB for applications.
+# Line 42: MariaDB-specific configuration settings.
+# Line 43: Version-specific MariaDB settings.
+
 [server]
-
 [mysqld]
-
 user                    = root
 pid-file                = /run/mysqld/mysqld.pid
 basedir                 = /usr
@@ -10,18 +32,13 @@ tmpdir                  = /tmp
 lc-messages-dir         = /usr/share/mysql
 lc-messages             = en_US
 skip-external-locking
-
 bind-address            = 0.0.0.0
 expire_logs_days        = 10
-
 character-set-server  = utf8mb4
 collation-server      = utf8mb4_general_ci
-
 port = 3306
 socket			    = /var/run/mysqld/mysqld.sock
-
 [embedded]
-
 [mariadb]
-
 [mariadb-10.5]
+

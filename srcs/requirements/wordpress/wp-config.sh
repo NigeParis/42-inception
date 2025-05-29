@@ -1,5 +1,5 @@
 #!/bin/sh
-
+trap 'exit' TERM INT
 sleep 10
 
 cd /var/www/wordpress

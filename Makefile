@@ -76,5 +76,5 @@ fclean: clean
 
 re: fclean all
 
-.PHOMY: all build clean fclean re
+.PHONY: all build clean fclean re
 

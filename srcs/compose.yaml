@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
-#                                                         :::      ::::::::    #
-#    Docker compose                                     :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/05/28 13:29:05 by nrobinso          #+#    #+#              #
-#    Updated: 2025/05/28 13:29:57 by nrobinso         ###   ########.fr        #
+#                                                                              #
+#    Docker compose                                                            #
+#                                                                              #
+#    By: nrobinso <nrobinso@student.42.fr>                                     #
+#                                                                              #
+#    Created: 2025/05/28 13:29:05 by nrobinso                                  #
+#    Updated: 2025/05/28 13:29:57 by nrobinso                                  #
 #                                                                              #
 # **************************************************************************** #
 # inception compose
@@ -39,13 +39,10 @@ services:
       - wordpress
     volumes:
       - wordpress:/var/www/wordpress
-
     ports:
       - "443:443"
     networks:
       - inception 
-
-
 
   wordpress:
     container_name: wordpress
@@ -64,7 +61,6 @@ services:
     networks:
       - inception 
 
-
 volumes:
   mariadb:
     name: mariadb_data
@@ -81,10 +77,59 @@ volumes:
       device: /home/nigel/data/wordpress
       o: bind
       type: none
-
-
-
   
 networks:
   inception:
     driver: bridge
+
+# **************************************************************************** #
+# Notes - Configuration for Docker Compose (Pour Inception of 42 School)       #
+# **************************************************************************** #
+
+# Line 14: Defines services
+# Line 15: Defines the MariaDB database service.
+# Line 16: Assigns a custom container name for MariaDB.
+# Line 17: Specifies the build: context: and Dockerfile: location.
+# Line 20: Mounts a persistent volume to store MariaDB data.
+# Line 22: Loads environment variables from a secrets file.
+# Line 24: Ensures the container restarts automatically on failure.
+# Line 25: Exposes port 3306 for database connections.
+# Line 27: Connects MariaDB to the custom "inception" network.
+
+# Line 30: Defines the Nginx web server service.
+# Line 31: Assigns a custom container name for Nginx.
+# Line 32: Loads environment variables from a secrets file.
+# Line 34: Specifies the build: context: and Dockerfile: location.
+# Line 37: Ensures Nginx restarts automatically on failure.
+# Line 38: Sets dependency on WordPress to ensure proper startup order.
+# Line 40: Mounts WordPress files inside the Nginx container.
+# Line 42: Exposes HTTPS traffic through port 443.
+# Line 44: Connects Nginx to the custom "inception" network.
+
+# Line 47: Defines the WordPress application service.
+# Line 48: Assigns a custom container name for WordPress.
+# Line 49: Loads environment variables from a secrets file.
+# Line 51: Specifies the build: context: and Dockerfile: location.
+# Line 54: Sets dependency on MariaDB to ensure database availability.
+# Line 56: Mounts WordPress files inside the container.
+# Line 58: Ensures the WordPress container restarts automatically.
+# Line 59: Exposes port 9000 for PHP-FPM processing.
+# Line 61: Connects WordPress to the custom "inception" network.
+
+# Line 64: Defines persistent storage for MariaDB.
+# Line 66: Assigns a name to the MariaDB volume.
+# Line 67: Uses local storage for volume persistence.
+# Line 69: Maps MariaDB storage to a specific host directory.
+# Line 70: Ensures the volume binds to the directory properly.
+# Line 71: Specifies no additional restrictions - format files etc.
+
+# Line 73: Defines persistent storage for WordPress.
+# Line 74: Assigns a name to the WordPress volume.
+# Line 75: Uses local storage for volume persistence.
+# Line 77: Maps WordPress storage to a specific host directory.
+# Line 78: Ensures the volume binds to the directory properly.
+# Line 79: Specifies no additional restrictions.
+
+# Line 81: Defines a custom network for container communication.
+# Line 83: Uses a bridge network to allow isolated communication between services.
+

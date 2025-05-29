@@ -1,0 +1,45 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    example_env                                        :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: nrobinso <nrobinso@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/05/29 09:29:05 by nrobinso          #+#    #+#              #
+#    Updated: 2025/05/29 09:29:57 by nrobinso         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+# Enviroment Variables Example of a .env file placed in secrets folder
+
+DOMAIN_NAME="nrobinso.42.fr"
+MDB_NAME="Mariadb"
+MDB_USER="Mariadb_user"
+MDB_PASSWORD="Mariadb_user_pass"
+MDB_ROOT_PASSWORD="Root_pass"
+WP_TITLE="This is the page of nrobinso"
+WP_ADMIN_USER="Nigel"
+WP_ADMIN_PASSWORD="Nigel le boss"
+WP_ADMIN_EMAIL="Nigel@nigel.fr"
+WP_USER="Mamoud"
+WP_USER_PASSWORD="Arracheur de pomme"
+WP_USER_EMAIL="Mamoud@mamoud.fr"
+WP_USER_ROLE="User"
+
+# **************************************************************************** #
+# Notes - Environment Variables project inception - EXAMPLE                    #
+# **************************************************************************** #
+
+# Line 14: Defines the domain name for the WordPress site.
+# Line 15: Sets the database name used by WordPress.
+# Line 16: Defines the database username.
+# Line 17: Sets the password for the database user.
+# Line 18: Sets the root password for MariaDB.
+# Line 19: Defines the title of the WordPress site.
+# Line 20: Sets the WordPress admin username.
+# Line 21: Defines the WordPress admin password.
+# Line 22: Sets the WordPress admin email address.
+# Line 23: Defines a standard WordPress user account.
+# Line 24: Sets the password for the new WordPress user.
+# Line 25: Defines the email for the new WordPress user.
+# Line 26: Assigns a role to the new WordPress user.
+

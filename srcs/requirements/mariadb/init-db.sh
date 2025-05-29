@@ -1,5 +1,5 @@
 #!/bin/bash
-
+trap 'exit' TERM INT
 # start mariadb
 echo "Starting MariaDB service..."
 exec mysqld_safe &
