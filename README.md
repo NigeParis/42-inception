@@ -1,17 +1,19 @@
 # Inception Project - 42 School
 
 The aim is to set up a system using Docker and Docker Compose to run multiple containers. The main components are MariaDB as the database, Nginx as the web server, and WordPress as the application. The project requires configuring services, managing storage, and establishing networking between containers. It teaches automation, scalability, security, and system administration concepts. It provides experience in working with modern infrastructure tools.
-📂 project-root/
-│── 📄 Makefile         # Calls Docker Compose commands
-│── 📂 docker/
-│   │── 📄 docker-compose.yml  # Defines services and refers to Dockerfiles
-│   │── 📂 services/
-│   │   │── 📂 service1/
-│   │   │   │── 📄 Dockerfile  # Defines container setup for service1
-│   │   │── 📂 service2/
-│   │   │   │── 📄 Dockerfile  # Defines container setup for service2
-│   │   │── 📂 serviceN/
-│   │   │   │── 📄 Dockerfile  # Defines additional services
+# Project Structure - Inception
+
+📂 **project-root/** #inception  
+│── 📄 **Makefile**         # Calls Docker Compose commands  
+│── 📂 **sources/**  
+│   │── 📄 **docker-compose.yml**  # Defines services and refers to Dockerfiles  
+│   │── 📂 **services - requirements/**  
+│   │   │── 📂 **service nginx/**  
+│   │   │   │── 📄 **Dockerfile**  # Defines container setup for service1  
+│   │   │── 📂 **service mariadb/**  
+│   │   │   │── 📄 **Dockerfile**  # Defines container setup for service2  
+│   │   │── 📂 **service wordpress/**  
+│   │   │   │── 📄 **Dockerfile**  # Defines additional services  
 
 
 ## Overview  
